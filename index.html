@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caroline's Sweet 17</title>
+<meta name="description" content="You're invited to Caroline's Sweet 17 on 29 November 2026 at Midtown Hotel Surabaya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   COLORS & FONTS  (edit these to restyle the whole website)
+   ============================================================ */
+:root{
+  --bg:        #1a0b2e;   /* deep aubergine */
+  --bg-soft:   #261045;   /* slightly lighter purple for panels */
+  --purple:    #5b2a86;   /* royal purple */
+  --purple-hi: #7b3fb0;   /* brighter purple for hover */
+  --gold:      #d9bf8c;   /* champagne gold accent */
+  --text:      #f1eaf8;
+  --muted:     #b9a9cf;
+  --line:      rgba(217,191,140,.28);
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans:  "Jost", system-ui, sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- HERO + ANIMATED PHOTO BACKGROUND ---------- */
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;padding:4rem 1.5rem;overflow:hidden;isolation:isolate}
+.slides{position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 30% 20%,#4a2078 0%,var(--bg) 70%)}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2s ease;animation:drift 22s ease-in-out infinite alternate}
+.slide.active{opacity:1}
+@keyframes drift{from{transform:scale(1)}to{transform:scale(1.12) translate(-1.5%,-1%)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(26,11,46,.72) 0%,rgba(26,11,46,.55) 45%,var(--bg) 100%)}
+
+.hero-inner{max-width:720px}
+.hero .big{font-family:var(--serif);font-weight:400;font-size:clamp(9rem,34vw,20rem);line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--gold);letter-spacing:-.02em}
+.hero h1{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(2rem,6vw,3.4rem);margin-top:1.2rem}
+.hero .sub{color:var(--muted);margin-top:.4rem;font-size:1.05rem}
+.hero .date-line{margin-top:1.6rem;font-family:var(--serif);font-size:1.35rem;color:var(--gold)}
+
+.countdown{display:flex;justify-content:center;gap:1.6rem;margin-top:2rem}
+.countdown div{min-width:3.8rem}
+.countdown b{display:block;font-family:var(--serif);font-weight:400;font-size:2.2rem;line-height:1}
+.countdown span{font-size:.8rem;color:var(--muted)}
+
+.btn{display:inline-block;margin-top:2.2rem;padding:.9rem 2.2rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-family:var(--sans);font-size:.95rem;letter-spacing:.08em;background:transparent;cursor:pointer;transition:background .25s,color .25s}
+.btn:hover{background:var(--gold);color:var(--bg)}
+.btn.solid{background:var(--purple);border-color:var(--purple);color:#fff}
+.btn.solid:hover{background:var(--purple-hi);border-color:var(--purple-hi);color:#fff}
+.btn[disabled]{opacity:.5;cursor:wait}
+
+/* ---------- SECTIONS ---------- */
+section.block{padding:6rem 1.5rem;max-width:900px;margin:0 auto}
+section.block[hidden]{display:none}
+h2{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(2rem,5vw,2.8rem);text-align:center;margin-bottom:.6rem}
+.lead{text-align:center;color:var(--muted);max-width:520px;margin:0 auto 3rem}
+.rule{width:60px;height:1px;background:var(--gold);margin:1.2rem auto 2rem}
+
+/* ---------- DETAILS ---------- */
+.details{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.detail{background:var(--bg);padding:2.2rem 1.6rem;text-align:center}
+.detail h3{font-family:var(--serif);font-weight:600;font-size:1.5rem;color:var(--gold);margin-bottom:.5rem}
+.detail p{color:var(--text)}
+.detail small{color:var(--muted);display:block;margin-top:.6rem}
+.swatches{display:flex;justify-content:center;gap:.7rem;margin-top:1rem}
+.swatches i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.35)}
+
+/* ---------- FORMS ---------- */
+.panel{background:var(--bg-soft);border:1px solid var(--line);padding:2.4rem clamp(1.2rem,4vw,2.6rem);max-width:560px;margin:0 auto}
+label,.legend{display:block;font-size:.95rem;color:var(--muted);margin:1.2rem 0 .4rem}
+input[type=text],input[type=number],textarea{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--text);font:inherit;padding:.6rem 0;border-radius:0}
+textarea{resize:vertical;min-height:110px;border:1px solid var(--line);padding:.8rem;margin-top:.2rem}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.4rem}
+.choices input{position:absolute;opacity:0}
+.choices label{margin:0;text-align:center;padding:.9rem .5rem;border:1px solid var(--line);color:var(--text);cursor:pointer;transition:all .2s}
+.choices input:checked + label{background:var(--purple);border-color:var(--gold)}
+.choices input:focus-visible + label{outline:2px solid var(--gold);outline-offset:3px}
+#guestsWrap[hidden]{display:none}
+.form-msg{margin-top:1.2rem;text-align:center;min-height:1.5rem;color:var(--gold)}
+.panel .btn{width:100%;margin-top:1.8rem}
+
+/* ---------- WISHES ---------- */
+.wish-list{max-width:560px;margin:3rem auto 0;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);max-height:480px;overflow-y:auto}
+.wish{background:var(--bg);padding:1.2rem 1.4rem}
+.wish p{font-family:var(--serif);font-size:1.2rem;line-height:1.5}
+.wish cite{display:block;margin-top:.4rem;font-style:normal;font-size:.85rem;color:var(--gold)}
+.empty{background:var(--bg);padding:1.6rem;text-align:center;color:var(--muted)}
+
+/* ---------- LINKS & FOOTER ---------- */
+.links{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+.links .btn{margin-top:0}
+footer{text-align:center;padding:4rem 1.5rem 3rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+footer .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--text);margin-bottom:.4rem}
+
+@media (prefers-reduced-motion:reduce){
+  .slide{animation:none;transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="slides" id="slides" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="big" aria-hidden="true">17</div>
+    <h1 id="heroName">Caroline's Sweet Seventeen</h1>
+    <p class="sub" id="heroSub"></p>
+    <p class="date-line" id="heroDate"></p>
+    <div class="countdown" id="countdown" aria-label="Countdown to the party"></div>
+    <a class="btn" href="#rsvp">Reply to the invitation</a>
+  </div>
+</header>
+
+<!-- ============ DETAILS ============ -->
+<section class="block" id="details">
+  <h2>The details</h2>
+  <div class="rule"></div>
+  <div class="details" id="detailsGrid"></div>
+</section>
+
+<!-- ============ RSVP ============ -->
+<section class="block" id="rsvp">
+  <h2>Will you join us?</h2>
+  <div class="rule"></div>
+  <p class="lead">Please let us know by <span id="rsvpDeadline"></span> so we can prepare a seat for you.</p>
+
+  <form class="panel" id="rsvpForm" autocomplete="off">
+    <label for="rsvpName">Your name</label>
+    <input type="text" id="rsvpName" required maxlength="60">
+
+    <div class="legend" id="attLegend">Can you attend?</div>
+    <div class="choices" role="radiogroup" aria-labelledby="attLegend">
+      <input type="radio" name="attend" id="attYes" value="Yes" required>
+      <label for="attYes">Yes, I'll be there</label>
+      <input type="radio" name="attend" id="attNo" value="No">
+      <label for="attNo">Sorry, I can't make it</label>
+    </div>
+
+    <div id="guestsWrap" hidden>
+      <label for="guests">Number of guests (including you)</label>
+      <input type="number" id="guests" min="1" max="5" value="1">
+    </div>
+
+    <button class="btn solid" type="submit" id="rsvpBtn">Send my reply</button>
+    <div class="form-msg" id="rsvpMsg" role="status"></div>
+  </form>
+</section>
+
+<!-- ============ WISHES ============ -->
+<section class="block" id="wishes">
+  <h2>Send your wishes</h2>
+  <div class="rule"></div>
+  <p class="lead">Leave a message for Caroline on her special day.</p>
+
+  <form class="panel" id="wishForm" autocomplete="off">
+    <label for="wishName">Your name</label>
+    <input type="text" id="wishName" required maxlength="60">
+
+    <label for="wishText">Your message</label>
+    <textarea id="wishText" required maxlength="400"></textarea>
+
+    <button class="btn solid" type="submit" id="wishBtn">Send wishes</button>
+    <div class="form-msg" id="wishMsg" role="status"></div>
+  </form>
+
+  <div class="wish-list" id="wishList" aria-live="polite"></div>
+</section>
+
+<!-- ============ EXTRA LINKS (optional) ============ -->
+<section class="block" id="linksSection" hidden>
+  <h2>More</h2>
+  <div class="rule"></div>
+  <div class="links" id="linksBox"></div>
+</section>
+
+<footer>
+  <div class="sig" id="footName"></div>
+  <div id="footText"></div>
+</footer>
+
+
+<script>
+/* ==============================================================
+   EDIT HERE  -  everything you need to change is in this block
+   ============================================================== */
+const CONFIG = {
+
+  // ---- Main text ----
+  name:      "Caroline's Sweet Seventeen",
+  subtitle:  "Join us for an evening to remember",
+  footerName: "Caroline",
+  footerText: "With love, from our family to yours.",
+
+  // ---- Event info ----
+  eventDate:  "2026-11-29T17:30:00+07:00",   // WIB (Surabaya) time
+  dateText:   "Sunday, 29 November 2026",
+  timeText:   "17.30 WIB",
+  venueName:  "Midtown Hotel",
+  address:    "Jl. Basuki Rahmat No.76, Tegalsari, Kec. Tegalsari, Surabaya, Jawa Timur 60262",
+  mapsLink:   "https://www.google.com/maps/search/?api=1&query=Midtown+Hotel+Jl.+Basuki+Rahmat+No.76+Surabaya",
+  rsvpDeadline: "22 November 2026",          // change to your real deadline
+
+  // ---- Dress code ----
+  dresscodeText: "Dark colors",
+  dresscodeNote: "Black, navy, brown, and other deep tones.",
+  dresscodeColors: ["#000000", "#14213d", "#4a2f1d", "#2b2b2b"],
+
+  // ---- Animated background photos ----
+  // 1. Put Caroline's photos in a folder called "photos" next to this file
+  // 2. List them below. Leave the list empty [] to use the purple gradient only.
+  photos: [
+    // "photos/caroline-1.jpg",
+    // "photos/caroline-2.jpg",
+    // "photos/caroline-3.jpg",
+  ],
+  slideSeconds: 6,    // seconds each photo stays on screen
+
+  // ---- Extra links (optional). Remove the // to activate ----
+  links: [
+    // { label: "Gift registry",  url: "https://example.com" },
+    // { label: "Instagram",      url: "https://instagram.com/yourhandle" },
+    // { label: "Playlist",       url: "https://open.spotify.com/..." },
+  ],
+
+  // ---- Saving RSVPs & wishes ----
+  // Paste your Google Apps Script URL here (see the setup guide).
+  // While this is empty, the site runs in DEMO mode: replies are only
+  // saved in your own browser, so you can test the design.
+  scriptURL: ""
+};
+/* ============================================================== */
+
+
+/* ---------- Fill the page from CONFIG ---------- */
+const $ = id => document.getElementById(id);
+
+document.title = CONFIG.name;
+$("heroName").textContent = CONFIG.name;
+$("heroSub").textContent  = CONFIG.subtitle;
+$("heroDate").textContent = CONFIG.dateText + " \u00B7 " + CONFIG.timeText;
+$("rsvpDeadline").textContent = CONFIG.rsvpDeadline;
+$("footName").textContent = CONFIG.footerName;
+$("footText").textContent = CONFIG.footerText;
+
+const swatches = CONFIG.dresscodeColors.map(c => `<i style="background:${c}" title="${c}"></i>`).join("");
+$("detailsGrid").innerHTML = `
+  <div class="detail"><h3>Date</h3><p>${CONFIG.dateText}</p></div>
+  <div class="detail"><h3>Time</h3><p>${CONFIG.timeText}</p></div>
+  <div class="detail"><h3>Location</h3><p>${CONFIG.venueName}</p>
+    <small>${CONFIG.address}</small>
+    <small><a href="${CONFIG.mapsLink}" target="_blank" rel="noopener">Open in Google Maps</a></small></div>
+  <div class="detail"><h3>Dress code</h3><p>${CONFIG.dresscodeText}</p>
+    <small>${CONFIG.dresscodeNote}</small>
+    <div class="swatches">${swatches}</div></div>`;
+
+/* ---------- Extra links ---------- */
+if (CONFIG.links.length){
+  $("linksSection").hidden = false;
+  CONFIG.links.forEach(l => {
+    const a = document.createElement("a");
+    a.className = "btn"; a.href = l.url; a.target = "_blank"; a.rel = "noopener";
+    a.textContent = l.label;
+    $("linksBox").appendChild(a);
+  });
+}
+
+/* ---------- Photo slideshow background ---------- */
+(function(){
+  const box = $("slides");
+  if (!CONFIG.photos.length) return;
+  const slides = CONFIG.photos.map(src => {
+    const d = document.createElement("div");
+    d.className = "slide";
+    d.style.backgroundImage = `url("${src}")`;
+    box.appendChild(d);
+    return d;
+  });
+  let i = 0;
+  slides[0].classList.add("active");
+  if (slides.length > 1){
+    setInterval(() => {
+      slides[i].classList.remove("active");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("active");
+    }, CONFIG.slideSeconds * 1000);
+  }
+})();
+
+/* ---------- Countdown ---------- */
+(function(){
+  const target = new Date(CONFIG.eventDate).getTime();
+  const box = $("countdown");
+  function tick(){
+    const diff = target - Date.now();
+    if (diff <= 0){ box.innerHTML = "<span>The celebration has begun</span>"; return; }
+    const d = Math.floor(diff / 864e5),
+          h = Math.floor(diff % 864e5 / 36e5),
+          m = Math.floor(diff % 36e5 / 6e4),
+          s = Math.floor(diff % 6e4 / 1e3);
+    box.innerHTML = [[d,"days"],[h,"hours"],[m,"minutes"],[s,"seconds"]]
+      .map(([n,l]) => `<div><b>${String(n).padStart(2,"0")}</b><span>${l}</span></div>`).join("");
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+/* ---------- Saving & loading data ---------- */
+const DEMO = !CONFIG.scriptURL;
+
+async function save(payload){
+  if (DEMO){
+    const key = "demo_" + payload.type;
+    let all = [];
+    try { all = JSON.parse(localStorage.getItem(key) || "[]"); } catch(e){}
+    all.push(payload);
+    try { localStorage.setItem(key, JSON.stringify(all)); } catch(e){}
+    return;
+  }
+  // Google Apps Script needs text/plain + no-cors to avoid browser blocking
+  await fetch(CONFIG.scriptURL, {
+    method: "POST", mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  });
+}
+
+async function loadWishes(){
+  try{
+    if (DEMO) return JSON.parse(localStorage.getItem("demo_wish") || "[]").reverse();
+    const r = await fetch(CONFIG.scriptURL + "?action=wishes");
+    return await r.json();
+  }catch(e){ return []; }
+}
+
+function wishEl(name, message){
+  const d = document.createElement("div"); d.className = "wish";
+  const p = document.createElement("p");    p.textContent = message;  // textContent keeps it safe from HTML injection
+  const c = document.createElement("cite"); c.textContent = name;
+  d.append(p, c);
+  return d;
+}
+
+async function renderWishes(){
+  const list = $("wishList");
+  const wishes = await loadWishes();
+  list.innerHTML = "";
+  if (!wishes.length){
+    list.innerHTML = '<div class="empty">No wishes yet. Be the first to write one.</div>';
+    return;
+  }
+  wishes.forEach(w => list.appendChild(wishEl(w.name, w.message)));
+}
+
+/* ---------- RSVP form ---------- */
+document.querySelectorAll('input[name="attend"]').forEach(r =>
+  r.addEventListener("change", () => { $("guestsWrap").hidden = !$("attYes").checked; })
+);
+
+$("rsvpForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("rsvpBtn"), msg = $("rsvpMsg");
+  const attending = $("attYes").checked ? "Yes" : "No";
+  btn.disabled = true; msg.textContent = "Sending\u2026";
+  try{
+    await save({
+      type: "rsvp",
+      name: $("rsvpName").value.trim(),
+      attending,
+      guests: attending === "Yes" ? Number($("guests").value) : 0
+    });
+    msg.textContent = attending === "Yes"
+      ? "Thank you! We can't wait to celebrate with you."
+      : "Thank you for letting us know. You'll be missed.";
+    $("rsvpForm").reset(); $("guestsWrap").hidden = true;
+  }catch(err){
+    msg.textContent = "Something went wrong. Please try again.";
+  }
+  btn.disabled = false;
+});
+
+/* ---------- Wishes form ---------- */
+$("wishForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("wishBtn"), msg = $("wishMsg");
+  const name = $("wishName").value.trim(), message = $("wishText").value.trim();
+  btn.disabled = true; msg.textContent = "Sending\u2026";
+  try{
+    await save({ type: "wish", name, message });
+    msg.textContent = "Your wishes have been sent. Thank you!";
+    $("wishForm").reset();
+    const empty = $("wishList").querySelector(".empty");
+    if (empty) empty.remove();
+    $("wishList").prepend(wishEl(name, message));   // show it right away
+  }catch(err){
+    msg.textContent = "Something went wrong. Please try again.";
+  }
+  btn.disabled = false;
+});
+
+renderWishes();
+</script>
+</body>
+</html>
