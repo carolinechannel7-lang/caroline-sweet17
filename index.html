@@ -106,10 +106,7 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:va
   .slide{animation:none;transition:none}
   html{scroll-behavior:auto}
 }
-.music{position:fixed;right:16px;bottom:90px;z-index:50;display:flex;align-items:center;gap:.4rem;background:rgba(26,11,46,.9);border:1px solid var(--gold);padding:.4rem .9rem;border-radius:999px;font-size:.85rem}
-.music[hidden]{display:none}
-.music button{background:none;border:0;color:var(--gold);font-size:1.1rem;cursor:pointer;padding:.3rem .5rem}
-.music span{max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 
 /* ---------- INVITATION OPENING SCREEN ---------- */
 
@@ -206,9 +203,27 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:va
 </style>
 </head>
 <body>
+
+</head>
+<body>
+
+<!-- INVITATION OPENING SCREEN -->
+<div id="openingScreen">
+  <div class="opening-content">
+    <p class="opening-small">A SPECIAL INVITATION</p>
+    <div class="opening-line"></div>
+    <h1>This invitation<br>is for you</h1>
+    <p class="opening-name">Caroline's Sweet Seventeen</p>
+    <button type="button" id="openInvitation" class="open-btn">
+      Open Invitation
+    </button>
+    <p class="opening-footer">WITH LOVE, CAROLINE</p>
+  </div>
 </div>
 
-<!-- ============ HERO ============ -->
+<!-- BACKGROUND MUSIC -->
+<audio id="backgroundMusic"></audio>
+   <!-- ============ HERO ============ -->
 <header class="hero">
   <div class="slides" id="slides" aria-hidden="true"></div>
   <div class="hero-inner">
@@ -510,58 +525,42 @@ $("wishForm").addEventListener("submit", async e => {
   }
   btn.disabled = false;
 });
-
-/* ---------- OPEN INVITATION + START MUSIC ---------- */
+/* ---------- OPEN INVITATION + TWO SONGS ---------- */
 
 const openingScreen = $("openingScreen");
 const openButton = $("openInvitation");
 const backgroundMusic = $("backgroundMusic");
 
-openButton.addEventListener("click", async () => {
+let currentSong = 0;
 
-  // Start music after the guest clicks
-  try {
-    await backgroundMusic.play();
-  } catch (error) {
-    console.log("Music could not start:", error);
-  }
+function playSong(index) {
+  const song = CONFIG.songs[index];
 
-  // Close the opening screen
-  openingScreen.classList.add("hide");
+  backgroundMusic.src = song.file;
+  backgroundMusic.load();
 
-  // Remove the opening screen after animation
-  setTimeout(() => {
-    openingScreen.remove();
-  }, 1300);
+  backgroundMusic.play().catch(error => {
+    console.log("Music could not play:", error);
+  });
+}
 
+// Automatically play the next song when the current song ends
+backgroundMusic.addEventListener("ended", function () {
+  currentSong = (currentSong + 1) % CONFIG.songs.length;
+  playSong(currentSong);
 });
 
+// Open invitation when button is clicked
+openButton.addEventListener("click", function () {
+  openingScreen.classList.add("hide");
+
+  playSong(currentSong);
+
+  setTimeout(function () {
+    openingScreen.remove();
+  }, 1300);
+});
 renderWishes();
 </script>
 </body>
-   
-<!-- INVITATION OPENING SCREEN -->
-<div id="openingScreen">
-  <div class="opening-content">
-    <p class="opening-small">A SPECIAL INVITATION</p>
-
-    <div class="opening-line"></div>
-
-    <h1>This invitation<br>is for you</h1>
-
-    <p class="opening-name">Caroline's Sweet Seventeen</p>
-
-    <button id="openInvitation" class="open-btn">
-      Open Invitation
-    </button>
-
-    <p class="opening-footer">WITH LOVE, CAROLINE</p>
-  </div>
-</div>
-
-<!-- BACKGROUND MUSIC -->
-<audio id="backgroundMusic" loop>
-  <source src="dewasa.mp3" type="audio/mpeg">
-</audio>
-
 </html>
