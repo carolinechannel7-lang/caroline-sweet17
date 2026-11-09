@@ -106,10 +106,19 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:va
   .slide{animation:none;transition:none}
   html{scroll-behavior:auto}
 }
+.music{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;align-items:center;gap:.4rem;background:rgba(26,11,46,.9);border:1px solid var(--gold);padding:.4rem .9rem;border-radius:999px;font-size:.85rem}
+.music[hidden]{display:none}
+.music button{background:none;border:0;color:var(--gold);font-size:1.1rem;cursor:pointer;padding:.3rem .5rem}
+.music span{max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
-
 <body>
+   <div class="music" id="music" hidden>
+  <button id="mPrev" aria-label="Previous song">&#9198;</button>
+  <button id="mPlay" aria-label="Play or pause">&#9654;</button>
+  <button id="mNext" aria-label="Next song">&#9197;</button>
+  <span id="mTitle"></span>
+</div>
 
 <!-- ============ HERO ============ -->
 <header class="hero">
@@ -223,9 +232,21 @@ const CONFIG = {
   // 2. List them below. Leave the list empty [] to use the purple gradient only.
   photos: [IMG_20261108_143931.jpg IMG_20261109_161327.jpg IMG_20261108_100828.jpg IMG_20261109_063602.jpg],
   slideSeconds: 6,    // seconds each photo stays on screen
-
+songs: [
+  { title: "Dewasa - Nadin Amizah", file: "Nadin Amizah - Beranjak Dewasa (Official Lyric Video).mp3" },
+  { title: "Serta Mulia - Sal Priadi", file: "Sal Priadi - Serta Mulia (Official Lyric Video).mp3" },
+],
+   
   // ---- Extra links (optional). Remove the // to activate ----
-  links: [
+<section class="block" id="moments">
+  <h2>Moments</h2>
+  <div class="rule"></div>
+  <p class="lead">Share your photos from the night, and see everyone else's. Tag the party on your own posts too.</p>
+  <div class="links">
+    <a class="btn solid" href="https://drive.google.com/drive/folders/1h5ZnAwBSF9OefwU0OQCPX69uhRQ3mjqH" target="_blank" rel="noopener">Open the photo album</a>
+  </div>
+</section>
+  links: [],
     // { label: "Gift registry",  url: "https://example.com" },
     // { label: "Instagram",      url: "https://instagram.com/yourhandle" },
     // { label: "Playlist",       url: "https://open.spotify.com/..." },
@@ -404,7 +425,19 @@ $("wishForm").addEventListener("submit", async e => {
   }
   btn.disabled = false;
 });
-
+(function(){
+  const songs = CONFIG.songs || [];
+  if (!songs.length) return;
+  $("music").hidden = false;
+  const audio = new Audio(); let i = 0;
+  function load(){ audio.src = songs[i].file; $("mTitle").textContent = songs[i].title; }
+  function play(){ audio.play().then(() => { $("mPlay").innerHTML = "&#9208;"; }).catch(() => {}); }
+  load();
+  $("mPlay").onclick = () => { if (audio.paused) play(); else { audio.pause(); $("mPlay").innerHTML = "&#9654;"; } };
+  $("mNext").onclick = () => { i = (i + 1) % songs.length; load(); play(); };
+  $("mPrev").onclick = () => { i = (i - 1 + songs.length) % songs.length; load(); play(); };
+  audio.addEventListener("ended", $("mNext").onclick);
+})();
 renderWishes();
 </script>
 </body>
