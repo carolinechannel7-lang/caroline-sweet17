@@ -187,7 +187,14 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:va
 
   <div class="wish-list" id="wishList" aria-live="polite"></div>
 </section>
-
+<section class="block" id="moments">
+  <h2>Moments</h2>
+  <div class="rule"></div>
+  <p class="lead">Moments.</p>
+  <div class="links">
+    <a class="btn solid" href="https://drive.google.com/drive/folders/1h5ZnAwBSF9OefwU0OQCPX69uhRQ3mjqH" target="_blank" rel="noopener">Open the photo album</a>
+  </div>
+</section>
 <!-- ============ EXTRA LINKS (optional) ============ -->
 <section class="block" id="linksSection" hidden>
   <h2>More</h2>
@@ -214,23 +221,21 @@ const CONFIG = {
   footerText: "With love, from our family to yours.",
 
   // ---- Event info ----
-  eventDate:  "2026-11-29T17:30:00+07:00",   // WIB (Surabaya) time
+  eventDate:  "2026-11-29T17:30:00+07:00",
   dateText:   "Sunday, 29 November 2026",
   timeText:   "17.30 WIB",
   venueName:  "Midtown Hotel",
   address:    "Jl. Basuki Rahmat No.76, Tegalsari, Kec. Tegalsari, Surabaya, Jawa Timur 60262",
   mapsLink:   "https://www.google.com/maps/search/?api=1&query=Midtown+Hotel+Jl.+Basuki+Rahmat+No.76+Surabaya",
-  rsvpDeadline: "22 November 2026",          // change to your real deadline
+  rsvpDeadline: "22 November 2026",
 
   // ---- Dress code ----
   dresscodeText: "Dark colors",
   dresscodeNote: "Black, navy, brown, and other deep tones.",
   dresscodeColors: ["#000000", "#14213d", "#4a2f1d", "#2b2b2b"],
 
-  // ---- Animated background photos ----
-  // 1. Put Caroline's photos in a folder called "photos" next to this file
-  // 2. List them below. Leave the list empty [] to use the purple gradient only.
-    photos: [
+  // ---- Background photos ----
+  photos: [
     "IMG_20261108_143931.jpg",
     "IMG_20261109_161327.jpg",
     "IMG_20261108_100828.jpg",
@@ -238,32 +243,16 @@ const CONFIG = {
   ],
   slideSeconds: 6,
 
+  // ---- Songs ----
   songs: [
     { title: "Dewasa - Nadin Amizah", file: "Nadin Amizah - Beranjak Dewasa (Official Lyric Video).mp3" },
     { title: "Serta Mulia - Sal Priadi", file: "Sal Priadi - Serta Mulia (Official Lyric Video).mp3" }
   ],
 
+  // ---- Extra links ----
   links: [],
-   
-   <section class="block" id="moments">
-  <h2>Moments</h2>
-  <div class="rule"></div>
-  <p class="lead">Share your photos from the night, and see everyone else's. Tag the party on your own posts too.</p>
-  <div class="links">
-    <a class="btn solid" href="https://drive.google.com/drive/folders/1h5ZnAwBSF9OefwU0OQCPX69uhRQ3mjqH" target="_blank" rel="noopener">Open the photo album</a>
-  </div>
-</section>
-  // ---- Extra links (optional). Remove the // to activate ----
-  links: [],
-    // { label: "Gift registry",  url: "https://example.com" },
-    // { label: "Instagram",      url: "https://instagram.com/yourhandle" },
-    // { label: "Playlist",       url: "https://open.spotify.com/..." },
-  ],
 
   // ---- Saving RSVPs & wishes ----
-  // Paste your Google Apps Script URL here (see the setup guide).
-  // While this is empty, the site runs in DEMO mode: replies are only
-  // saved in your own browser, so you can test the design.
   scriptURL: "https://script.google.com/macros/s/AKfycbwTP4iY9F_b9gedweFmE800CrEeKOXptARUX-iCoLnlhV1eU2jgbgl4RvRJXrNKrjXQYg/exec"
 };
 /* ============================================================== */
