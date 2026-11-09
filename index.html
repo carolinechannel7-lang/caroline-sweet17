@@ -110,14 +110,102 @@ footer .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:va
 .music[hidden]{display:none}
 .music button{background:none;border:0;color:var(--gold);font-size:1.1rem;cursor:pointer;padding:.3rem .5rem}
 .music span{max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- INVITATION OPENING SCREEN ---------- */
+
+#openingScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at center, #352052 0%, #1a0b2e 75%);
+  transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+#openingScreen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.opening-content {
+  max-width: 500px;
+  animation: openingFade 1.5s ease;
+}
+
+.opening-small {
+  color: var(--gold);
+  font-size: .8rem;
+  letter-spacing: .3em;
+  margin-bottom: 1.5rem;
+}
+
+.opening-line {
+  width: 55px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 2rem;
+}
+
+.opening-content h1 {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 9vw, 5rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.opening-name {
+  color: var(--muted);
+  margin-top: 1.5rem;
+  font-size: .95rem;
+  letter-spacing: .08em;
+}
+
+.open-btn {
+  margin-top: 3rem;
+  padding: 1rem 2.8rem;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: .9rem;
+  letter-spacing: .15em;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.open-btn:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.opening-footer {
+  margin-top: 4rem;
+  color: var(--muted);
+  font-size: .7rem;
+  letter-spacing: .25em;
+}
+
+@keyframes openingFade {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
 </head>
 <body>
-   <div class="music" id="music" hidden>
-  <button id="mPrev" aria-label="Previous song">&#9198;</button>
-  <button id="mPlay" aria-label="Play or pause">&#9654;</button>
-  <button id="mNext" aria-label="Next song">&#9197;</button>
-  <span id="mTitle"></span>
 </div>
 
 <!-- ============ HERO ============ -->
@@ -422,20 +510,58 @@ $("wishForm").addEventListener("submit", async e => {
   }
   btn.disabled = false;
 });
-(function(){
-  const songs = CONFIG.songs || [];
-  if (!songs.length) return;
-  $("music").hidden = false;
-  const audio = new Audio(); let i = 0;
-  function load(){ audio.src = songs[i].file; $("mTitle").textContent = songs[i].title; }
-  function play(){ audio.play().then(() => { $("mPlay").innerHTML = "&#9208;"; }).catch(() => {}); }
-  load();
-  $("mPlay").onclick = () => { if (audio.paused) play(); else { audio.pause(); $("mPlay").innerHTML = "&#9654;"; } };
-  $("mNext").onclick = () => { i = (i + 1) % songs.length; load(); play(); };
-  $("mPrev").onclick = () => { i = (i - 1 + songs.length) % songs.length; load(); play(); };
-  audio.addEventListener("ended", $("mNext").onclick);
-})();
+
+/* ---------- OPEN INVITATION + START MUSIC ---------- */
+
+const openingScreen = $("openingScreen");
+const openButton = $("openInvitation");
+const backgroundMusic = $("backgroundMusic");
+
+openButton.addEventListener("click", async () => {
+
+  // Start music after the guest clicks
+  try {
+    await backgroundMusic.play();
+  } catch (error) {
+    console.log("Music could not start:", error);
+  }
+
+  // Close the opening screen
+  openingScreen.classList.add("hide");
+
+  // Remove the opening screen after animation
+  setTimeout(() => {
+    openingScreen.remove();
+  }, 1300);
+
+});
+
 renderWishes();
 </script>
 </body>
+   
+<!-- INVITATION OPENING SCREEN -->
+<div id="openingScreen">
+  <div class="opening-content">
+    <p class="opening-small">A SPECIAL INVITATION</p>
+
+    <div class="opening-line"></div>
+
+    <h1>This invitation<br>is for you</h1>
+
+    <p class="opening-name">Caroline's Sweet Seventeen</p>
+
+    <button id="openInvitation" class="open-btn">
+      Open Invitation
+    </button>
+
+    <p class="opening-footer">WITH LOVE, CAROLINE</p>
+  </div>
+</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="backgroundMusic" loop>
+  <source src="dewasa.mp3" type="audio/mpeg">
+</audio>
+
 </html>
